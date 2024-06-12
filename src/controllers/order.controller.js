@@ -17,6 +17,16 @@ const getAllOrders = asyncHandler(async(req, res) => {
     return res.status(200).json(new ApiResponse(201, orders, "orders are here"))
 })
 
+const getSingleOrder = asyncHandler ( async (req, res) => {
+    const {orderId} = req.params;
+
+    const order = await Order.findById(orderId);
+
+    if(!order) return new ApiError(404, "No order found");
+
+    return res.status(200).json(201, {order}, "Order is here")
+})
+
 const placeOrder = asyncHandler(async(req, res) => {
     // get all data from body
     // validate data

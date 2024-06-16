@@ -7,10 +7,16 @@ import dishRouter from "./routes/dish.route.js"
 
 const app = express();
 
+// app.use(cors({
+//     origin: process.env.CORS_ORIGIN,
+//     credentials: true
+// }))
+const allowedOrigins = ['http://localhost:5173']; // Change this to your frontend URL
+
 app.use(cors({
-    origin: process.env.CORS_ORIGIN,
-    credentials: true
-}))
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 app.use(express.json({limit: "16kb"}))
 

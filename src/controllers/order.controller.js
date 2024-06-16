@@ -14,7 +14,9 @@ const getAllOrders = asyncHandler(async(req, res) => {
         throw new ApiError(404, "no orders found")
     }
 
-    return res.status(200).json(new ApiResponse(201, orders, "orders are here"))
+    console.log("orders are ", orders)
+
+    return res.status(200).json(new ApiResponse(201, {orders}, "orders are here"))
 })
 
 const getSingleOrder = asyncHandler ( async (req, res) => {
@@ -28,12 +30,10 @@ const getSingleOrder = asyncHandler ( async (req, res) => {
 })
 
 const placeOrder = asyncHandler(async(req, res) => {
-    // get all data from body
-    // validate data
-    // create new order
     const {dishId} = req.params;
     console.log("dish id is ", dishId)
     const customerId = req.user._id;
+    console.log("customer id is ", customerId)
 
     if(!dishId) {
         throw new ApiError(404, "dish id required");
@@ -83,4 +83,4 @@ const deleteOrder = asyncHandler( async (req, res) => {
     return res.status(200).json(new ApiResponse(201, {}, "order removed success"))
 })
 
-export {getAllOrders, placeOrder, changeOrderStatus, deleteOrder}
+export {getAllOrders, placeOrder, changeOrderStatus, deleteOrder, getSingleOrder}

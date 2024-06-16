@@ -4,22 +4,13 @@ import jwt from "jsonwebtoken"
 
 const userSchema = new Schema(
     {
-        username: {
-            type: String,
-            required: true,
-            unique: true,
-            lowercase: true,
-            trim: true,
-            index: true
-        },
         fullName: {
             type: String,
             required: true,
-            index: true
+            unique: true
         },
         avatar: {
             type: String,
-            required: true
         },
         avatarPublicId: {
             type: String
@@ -29,7 +20,8 @@ const userSchema = new Schema(
             required: true,
             unique: true,
             lowercase: true,
-            trim: true
+            trim: true,
+            index: true
         },
         password: {
             type: String,
@@ -39,15 +31,12 @@ const userSchema = new Schema(
             type: String
         },
         isAdmin: {
-            type: String,
+            type: Boolean,
             default: false
         },
-        // orderHistory: [
-        //     {
-        //         type: Schema.Types.ObjectId,
-        //         ref: "Order"
-        //     }
-        // ]
+        mobile: {
+            type: Number
+        }
     }, {timestamps: true})
 
 

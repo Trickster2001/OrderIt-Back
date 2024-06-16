@@ -15,6 +15,8 @@ const getAllDishes = asyncHandler(async (req, res) => {
 const getOneDish = asyncHandler(async (req, res) => {
   const { dishId } = req.params;
 
+  console.log("in back ", dishId)
+
   const dish = await Dish.findById(dishId);
 
   if (!dish) {
@@ -25,12 +27,8 @@ const getOneDish = asyncHandler(async (req, res) => {
 });
 
 const addDish = asyncHandler(async (req, res) => {
-  // get data from body
-  // validate the data
-  // check for image
-  // add data to db
 
-  const { title, price } = req.body;
+  const { title, price, recipe, ingredients } = req.body;
 
   if ([title, price].some((field) => field?.trim() === "")) {
     throw new ApiError(400, "all fields are required");
@@ -52,6 +50,8 @@ const addDish = asyncHandler(async (req, res) => {
     title,
     dishImage: dishImage.url,
     price,
+    recipe,
+    ingredients
   });
 
   const createdDish = await Dish.findById(dish._id);
@@ -64,40 +64,6 @@ const addDish = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(201, createdDish, "dish added success"));
 });
-
-// const updateDish = asyncHandler( async (req, res) => {
-//     const { dishId } = req.params;
-//     const { title, price } = req.body;
-
-//     const dishLocalPath = req.file?.path;
-
-//     if(!dishLocalPath) {
-//         throw new ApiError(400, "dish image is required")
-//     }
-
-//     const dishImage = await uploadOnCloudinary(dishLocalPath);
-
-//     if(!dishImage) {
-//         return new ApiError(400, "dish image not uploaded on cloud");
-//     }
-
-//     const updatedDish = await Dish.findByIdAndUpdate(
-//         dishId,
-//         {
-//             $set: {
-//                 title,
-//                 price,
-//                 dishImage: dishImage.url
-//             }
-//         }
-//     )
-
-//     if(!updatedDish) {
-//         throw new ApiError(500, "Something went wrong when updating the dish")
-//     };
-
-//     return res.status(200).json(new ApiResponse(201, updatedDish, "dish updated success"))
-// })
 
 const updateDish = asyncHandler(async (req, res) => {
   const { dishId } = req.params;

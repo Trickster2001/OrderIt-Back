@@ -14,7 +14,15 @@ const dishSchema = new mongoose.Schema(
         price: {
             type: Number,
             required: true
-        }
+        },
+        recipe: {
+            type: String
+        },
+        ingredients: [
+            {
+                type: String
+            }
+        ]
     }, {timestamps: true}
 )
 
